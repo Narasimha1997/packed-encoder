@@ -54,6 +54,8 @@ pub enum EncodeOrder {
     Little,
 }
 
+// signed integer
+
 #[inline]
 fn encode_i8(array: &mut [u8], value: &i8) -> Result<(), EncoderError> {
     array[0] = *value as u8;
@@ -76,14 +78,14 @@ fn encode_i16(
 #[inline]
 fn encode_i32(
     mut array: &mut [u8],
-    value: i32,
+    value: &i32,
     encode_order: EncodeOrder,
 ) -> Result<(), EncoderError> {
     match encode_order {
-        EncodeOrder::Big => array.write_i32::<BigEndian>(value),
-        EncodeOrder::Little => array.write_i32::<LittleEndian>(value),
+        EncodeOrder::Big => array.write_i32::<BigEndian>(*value),
+        EncodeOrder::Little => array.write_i32::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Int32(value)))
+    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Int32(*value)))
 }
 
 #[inline]
@@ -112,3 +114,62 @@ fn encode_i128(
     .map_or_else(|_| Ok(()), |_| Err(EncoderError::Int128(*value)))
 }
 
+// unsigned integer
+
+#[inline]
+fn encode_u8(array: &mut [u8], value: &u8) -> Result<(), EncoderError> {
+    array[0] = *value as u8;
+    Ok(())
+}
+
+#[inline]
+fn encode_u16(
+    mut array: &mut [u8],
+    value: &u16,
+    encode_order: EncodeOrder,
+) -> Result<(), EncoderError> {
+    match encode_order {
+        EncodeOrder::Big => array.write_u16::<BigEndian>(*value),
+        EncodeOrder::Little => array.write_u16::<LittleEndian>(*value),
+    }
+    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Uint16(*value)))
+}
+
+#[inline]
+fn encode_u32(
+    mut array: &mut [u8],
+    value: &u32,
+    encode_order: EncodeOrder,
+) -> Result<(), EncoderError> {
+    match encode_order {
+        EncodeOrder::Big => array.write_u32::<BigEndian>(*value),
+        EncodeOrder::Little => array.write_u32::<LittleEndian>(*value),
+    }
+    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Uint32(*value)))
+}
+
+#[inline]
+fn encode_u64(
+    mut array: &mut [u8],
+    value: &u64,
+    encode_order: EncodeOrder,
+) -> Result<(), EncoderError> {
+    match encode_order {
+        EncodeOrder::Big => array.write_u64::<BigEndian>(*value),
+        EncodeOrder::Little => array.write_u64::<LittleEndian>(*value),
+    }
+    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Uint64(*value)))
+}
+
+#[inline]
+fn encode_u128(
+    mut array: &mut [u8],
+    value: &u128,
+    encode_order: EncodeOrder,
+) -> Result<(), EncoderError> {
+    match encode_order {
+        EncodeOrder::Big => array.write_u128::<BigEndian>(*value),
+        EncodeOrder::Little => array.write_u128::<LittleEndian>(*value),
+    }
+    .map_or_else(|_| Ok(()), |_| Err(EncoderError::Uint128(*value)))
+}
