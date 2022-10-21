@@ -2,7 +2,7 @@ extern crate byteorder;
 
 use byteorder::{BigEndian, LittleEndian, WriteBytesExt};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum EncodeType {
     // int types
     Int8(i8),
@@ -72,7 +72,7 @@ fn encode_i16(
         EncodeOrder::Big => array.write_i16::<BigEndian>(*value),
         EncodeOrder::Little => array.write_i16::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Int16(*value)))
+    .map_or_else(|_| Err(EncodeError::Int16(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -85,7 +85,7 @@ fn encode_i32(
         EncodeOrder::Big => array.write_i32::<BigEndian>(*value),
         EncodeOrder::Little => array.write_i32::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Int32(*value)))
+    .map_or_else(|_| Err(EncodeError::Int32(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -98,7 +98,7 @@ fn encode_i64(
         EncodeOrder::Big => array.write_i64::<BigEndian>(*value),
         EncodeOrder::Little => array.write_i64::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Int64(*value)))
+    .map_or_else(|_| Err(EncodeError::Int64(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -111,7 +111,7 @@ fn encode_i128(
         EncodeOrder::Big => array.write_i128::<BigEndian>(*value),
         EncodeOrder::Little => array.write_i128::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Int128(*value)))
+    .map_or_else(|_| Err(EncodeError::Int128(*value)), |_| Ok(()))
 }
 
 // unsigned integer
@@ -132,7 +132,7 @@ fn encode_u16(
         EncodeOrder::Big => array.write_u16::<BigEndian>(*value),
         EncodeOrder::Little => array.write_u16::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Uint16(*value)))
+    .map_or_else(|_| Err(EncodeError::Uint16(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -145,7 +145,7 @@ fn encode_u32(
         EncodeOrder::Big => array.write_u32::<BigEndian>(*value),
         EncodeOrder::Little => array.write_u32::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Uint32(*value)))
+    .map_or_else(|_| Err(EncodeError::Uint32(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -158,7 +158,7 @@ fn encode_u64(
         EncodeOrder::Big => array.write_u64::<BigEndian>(*value),
         EncodeOrder::Little => array.write_u64::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Uint64(*value)))
+    .map_or_else(|_| Err(EncodeError::Uint64(*value)), |_| Ok(()))
 }
 
 #[inline]
@@ -171,7 +171,7 @@ fn encode_u128(
         EncodeOrder::Big => array.write_u128::<BigEndian>(*value),
         EncodeOrder::Little => array.write_u128::<LittleEndian>(*value),
     }
-    .map_or_else(|_| Ok(()), |_| Err(EncodeError::Uint128(*value)))
+    .map_or_else(|_| Err(EncodeError::Uint128(*value)), |_| Ok(()))
 }
 
 #[inline]

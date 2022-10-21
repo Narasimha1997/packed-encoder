@@ -1,7 +1,7 @@
 extern crate byteorder;
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum DecodedData {
     // int types
     Int8(i8),
