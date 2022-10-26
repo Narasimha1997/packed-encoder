@@ -2,25 +2,36 @@ extern crate byteorder;
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
 #[derive(Debug, Clone, PartialEq)]
+/// `DecodedData` enum is used to wrap the decoded content into one of the supported data-type.
+/// Example: `DecodedData::Str("hello")`, contains the string `hello` decoded back from the encoded bytes.
 pub enum DecodedData {
-    // int types
+
+    /// Int8 data representation
     Int8(i8),
+    /// Int16 data representation
     Int16(i16),
+    /// Int32 data representation
     Int32(i32),
+    /// Int64 data representation
     Int64(i64),
+    /// Int128 data representation
     Int128(i128),
 
-    // uint types
+    /// Uint8 data representation
     Uint8(u8),
+    /// Uint16 data representation
     Uint16(u16),
+    /// Uint32 data representation
     Uint32(u32),
+    /// Uint64 data representation
     Uint64(u64),
+    /// Uint128 data representation
     Uint128(u128),
 
-    // string
+    /// Str data representation
     Str(String),
 
-    // bytes
+    /// Bytes data representation
     Bytes(Vec<u8>),
 }
 
