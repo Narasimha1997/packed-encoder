@@ -25,29 +25,41 @@ pub enum DecodedData {
 }
 
 #[derive(Debug, Clone)]
+/// `DecodeType` enum can be used to tell the decoder who a sequence of bytes at a given offset must be decoded back.
+/// Example: `DecodeType::Uint16` can be used to tell the decoder to interpret the next two bytes as `uint16`.
 pub enum DecodeType {
-    // int types
+    /// Int8 tells the decoder to decode next 1 byte as signed 8-bit integer
     Int8,
+    /// Int16 tells the decoder to decode next 2 bytes as signed 16-bit integer
     Int16,
+    /// Int32 tells the decoder to decode next 4 bytes as signed 32-bit integer
     Int32,
+    /// Int64 tells the decoder to decode next 8 bytes as signed 64-bit integer
     Int64,
+    /// Int128 tells the decoder to decode next 16 bytes as signed 128-bit integer
     Int128,
 
-    // uint types
+    /// Uint8 tells the decoder to decode next 1 byte as unsigned 8-bit integer
     Uint8,
+    /// Uint16 tells the decoder to decode next 2 bytes as unsigned 16-bit integer
     Uint16,
+    /// Uint32 tells the decoder to decode next 4 bytes as unsigned 32-bit integer
     Uint32,
+    /// Uint64 tells the decoder to decode next 8 bytes as unsigned 64-bit integer
     Uint64,
+    /// Uint128 tells the decoder to decode next 16 bytes as unsigned 128-bit integer
     Uint128,
 
-    // string
+    /// Str(usize) tells the decoded to decode next `x` bytes as a string
     Str(usize),
 
-    // bytes
+    /// Str(usize) tells the decoded to decode next `x` bytes as a byte-array
     Bytes(usize),
 }
 
 #[derive(Debug, Clone)]
+/// `DecodeOrder` is used to specify how signed and unsigned integers encoded as bytes must be assumed w.r.t byte-order for decoding.
+/// Example `DecodeOrder::Little` assumes all the bytes to be decoded are in little endian byte order.
 pub enum DecodeOrder {
     Big,
     Little,
