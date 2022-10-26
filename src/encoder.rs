@@ -3,29 +3,43 @@ extern crate byteorder;
 use byteorder::{BigEndian, LittleEndian, WriteBytesExt};
 
 #[derive(Debug, Clone, PartialEq)]
+/// `EncodeType` contains various data-types that are supported by packed-encoder.
+/// This enum can be used to tell the encoder how a specific data needs to be encoded.
+/// Example: `EncodeType::Int16(2422)` tells the encoder to encode the value `2422` as a 16-bit signed integer.
 pub enum EncodeType {
-    // int types
+    /// Int8 type is a 8-bit signed integer
     Int8(i8),
+    /// Int8 type is a 16-bit signed integer
     Int16(i16),
+    /// Int8 type is a 32-bit signed integer
     Int32(i32),
+    /// Int8 type is a 64-bit signed integer
     Int64(i64),
+    /// Int8 type is a 128-bit signed integer
     Int128(i128),
 
-    // uint types
+    /// Uint8 type is a 8-bit unsigned integer
     Uint8(u8),
+    /// Uint16 type is a 16-bit unsigned integer
     Uint16(u16),
+    /// Uint32 type is a 32-bit unsigned integer
     Uint32(u32),
+    /// Uint64 type is a 64-bit unsigned integer
     Uint64(u64),
+    /// Uint128 type is a 128-bit unsigned integer
     Uint128(u128),
 
-    // string
+    // Str type represents a finite string
     Str(String),
 
-    // bytes
+    // Bytes represents a sequence of finite bytes
     Bytes(Vec<u8>),
 }
 
 #[derive(Debug, Clone)]
+/// `EncodeError` wraps the value that caused an error during encoding and returns it.
+/// Example `Err(EncoderErr::Int16(2422))` is used to depict that value 2422 which was of type `int16` 
+/// caused an error during encoding.  
 pub enum EncodeError {
     // int types
     Int8(i8),
@@ -49,6 +63,8 @@ pub enum EncodeError {
 }
 
 #[derive(Debug, Clone)]
+/// `EncodeOrder` is used to specify the endian order signed and unsigned integers while encoding.
+/// Example: `EncodeOrder::Big` is used to specify that all the integers should be ordered according to Big-Endian byte ordering.
 pub enum EncodeOrder {
     Big,
     Little,
