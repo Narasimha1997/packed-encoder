@@ -38,7 +38,7 @@ pub enum EncodeType {
 
 #[derive(Debug, Clone)]
 /// `EncodeError` wraps the value that caused an error during encoding and returns it.
-/// Example `Err(EncoderErr::Int16(2422))` is used to depict that value 2422 which was of type `int16` 
+/// Example `Err(EncoderErr::Int16(2422))` is used to depict that value 2422 which was of type `int16`
 /// caused an error during encoding.  
 pub enum EncodeError {
     // int types
@@ -199,18 +199,18 @@ fn encode_string(array: &mut [u8], value: &str) -> Result<(), EncodeError> {
 
 /// `encode_packed` encodes an array of values of any `EncodeType` enum into a packed byte-array. Returns the byte vector representing
 /// the packed byte-array or `EncodeErr` enum.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `elements`: List of elements to encode, example: `&[ EncodeType::Int8(10), EncodeType::Str("hello".to_owned()) ]`
 /// * `endian`: The byte-ordering to use while encoding
-/// 
+///
 /// # Examples:
 /// ```rust
 /// extern crate packed_encoder;
-/// 
+///
 /// use packed_encoder::encoder;
-/// 
+///
 /// fn main() {
 ///     // list of values to encode
 ///     let to_encode = &[
@@ -225,7 +225,7 @@ fn encode_string(array: &mut [u8], value: &str) -> Result<(), EncodeError> {
 ///    assert_eq!(encoded_result.is_ok(), true);
 ///    println!("bytes={:?}", encoded_result.unwrap());
 /// }
-/// 
+///
 /// ```
 pub fn encode_packed(elements: &[EncodeType], endian: EncodeOrder) -> Result<Vec<u8>, EncodeError> {
     let mut buffer: Vec<u8> = Vec::new();

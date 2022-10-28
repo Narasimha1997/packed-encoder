@@ -5,7 +5,6 @@ use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 /// `DecodedData` enum is used to wrap the decoded content into one of the supported data-type.
 /// Example: `DecodedData::Str("hello")`, contains the string `hello` decoded back from the encoded bytes.
 pub enum DecodedData {
-
     /// Int8 data representation
     Int8(i8),
     /// Int16 data representation
@@ -167,20 +166,20 @@ fn decode_string(array: &[u8]) -> Option<String> {
 
 /// `decode_packed` function decoded a given byte-array into list of required values specified in `types` parameter.
 /// Returns the list of decoded values `Vec<DecodedData>` or `DecodeError`.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `types`: List of required types to decode, example: `&[DecodeType::Int8, DecodeType::Str(10)]`
 /// * `buffer`: Immutable reference to the slice that contains bytes to be decoded
 /// * `decode_order`: the byte ordering to consider while decoding
-/// 
+///
 /// # Examples
 /// ```rust
 /// extern crate packed_encoder;
 /// use packed_encoder::decoder;
-/// 
+///
 /// fn main() {
-/// 
+///
 ///     // byte data to decode
 ///     let bytes = vec![192, 24, 212, 73, 201, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 116, 104, 105, 115, 45, 105, 115, 45, 103, 111, 111, 100, 11, 230, 234, 49, 0, 0, 0, 0, 10, 255, 171, 18, 51];
 ///     // required types to decode from the given byte array
@@ -195,7 +194,7 @@ fn decode_string(array: &[u8]) -> Option<String> {
 ///     // decode
 ///     let result = decoder::decode_packed(required_types, &bytes, decoder::DecodeOrder::Little);
 ///     assert_eq!(result.is_ok(), true);
-/// 
+///
 ///     // check values
 ///     let decoded_data = result.unwrap();
 ///     match &decoded_data[1] {
