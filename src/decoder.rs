@@ -72,13 +72,19 @@ pub enum DecodeType {
 /// `DecodeOrder` is used to specify how signed and unsigned integers encoded as bytes must be assumed w.r.t byte-order for decoding.
 /// Example `DecodeOrder::Little` assumes all the bytes to be decoded are in little endian byte order.
 pub enum DecodeOrder {
+    /// Big endian byte ordering
     Big,
+    /// Little endian byte ordering
     Little,
 }
 
 #[derive(Debug, Clone)]
+/// `DecodeError` wraps the error that occurred during during
 pub enum DecodeError {
+    /// InvalidData represents an error that happens when given sequency of bytes at given offset cannot be decoded into the required data-type.
+    /// Example `Err(DecodeErr::InvalidData(1))` says that the given bytes cannot be converted into the data-type specified at index 1.
     InvalidData(usize),
+    /// IndexOutOfBounds occurs when offset > size of the byte array.
     IndexOutOfBounds,
 }
 

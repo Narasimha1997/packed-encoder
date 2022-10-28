@@ -197,6 +197,36 @@ fn encode_string(array: &mut [u8], value: &str) -> Result<(), EncodeError> {
     Ok(())
 }
 
+/// `encode_packed` encodes an array of values of any `EncodeType` enum into a packed byte-array. Returns the byte vector representing
+/// the packed byte-array or `EncodeErr` enum.
+/// 
+/// # Arguments
+/// 
+/// * `elements`: List of elements to encode, example: `&[ EncodeType::Int8(10), EncodeType::Str("hello".to_owned()) ]`
+/// * `endian`: The byte-ordering to use while encoding
+/// 
+/// # Examples:
+/// ```rust
+/// extern crate packed_encoder;
+/// 
+/// use packed_encoder::encoder;
+/// 
+/// fn main() {
+///     // list of values to encode
+///     let to_encode = &[
+///         encoder::EncodeType::Int128(-234984564544),
+///         encoder::EncodeType::Str("this-is-good".to_owned()),
+///         encoder::EncodeType::Uint64(837477899),
+///         encoder::EncodeType::Int8(10),
+///         encoder::EncodeType::Bytes(vec![0xff, 0xab, 0x12, 0x33]),
+///    ];
+///    // encode the values the result will be of type `Result<Vec<u8>, EncodeError>`
+///    let encoded_result = encoder::encode_packed(to_encode, encoder::EncodeOrder::Little);
+///    assert_eq!(encoded_result.is_ok(), true);
+///    println!("bytes={:?}", encoded_result.unwrap());
+/// }
+/// 
+/// ```
 pub fn encode_packed(elements: &[EncodeType], endian: EncodeOrder) -> Result<Vec<u8>, EncodeError> {
     let mut buffer: Vec<u8> = Vec::new();
     let mut last_read = 0;
