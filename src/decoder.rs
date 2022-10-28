@@ -165,6 +165,46 @@ fn decode_string(array: &[u8]) -> Option<String> {
     String::from_utf8(array.to_vec()).ok()
 }
 
+/// `decode_packed` function decoded a given byte-array into list of required values specified in `types` parameter.
+/// Returns the list of decoded values `Vec<DecodedData>` or `DecodeError`.
+/// 
+/// # Arguments
+/// 
+/// * `types`: List of required types to decode, example: `&[DecodeType::Int8, DecodeType::Str(10)]`
+/// * `buffer`: Immutable reference to the slice that contains bytes to be decoded
+/// * `decode_order`: the byte ordering to consider while decoding
+/// 
+/// # Examples
+/// ```rust
+/// extern crate packed_encoder;
+/// use packed_encoder::decoder;
+/// 
+/// fn main() {
+/// 
+///     // byte data to decode
+///     let bytes = vec![192, 24, 212, 73, 201, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 116, 104, 105, 115, 45, 105, 115, 45, 103, 111, 111, 100, 11, 230, 234, 49, 0, 0, 0, 0, 10, 255, 171, 18, 51];
+///     // required types to decode from the given byte array
+///     let required_types = &[
+///            decoder::DecodeType::Int128,
+///            decoder::DecodeType::Str(12),
+///            decoder::DecodeType::Uint64,
+///            decoder::DecodeType::Int8,
+///            decoder::DecodeType::Bytes(4),
+///        ];
+///     
+///     // decode
+///     let result = decoder::decode_packed(required_types, &bytes, decoder::DecodeOrder::Little);
+///     assert_eq!(result.is_ok(), true);
+/// 
+///     // check values
+///     let decoded_data = result.unwrap();
+///     match &decoded_data[1] {
+///         decoder::DecodedData::Str(content) => {println!("decoded string at position 1: {}", content)},
+///         _ => {}
+///     }
+///
+/// }
+/// ```
 pub fn decode_packed(
     types: &[DecodeType],
     buffer: &[u8],
