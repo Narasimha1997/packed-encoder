@@ -2,7 +2,7 @@ extern crate byteorder;
 
 use byteorder::{BigEndian, LittleEndian, WriteBytesExt};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 /// `EncodeType` contains various data-types that are supported by packed-encoder.
 /// This enum can be used to tell the encoder how a specific data needs to be encoded.
 /// Example: `EncodeType::Int16(2422)` tells the encoder to encode the value `2422` as a 16-bit signed integer.
@@ -302,21 +302,18 @@ pub fn encode_packed(elements: &[EncodeType], endian: EncodeOrder) -> Result<Vec
                 temp.resize(string.len(), 0);
                 buffer.extend_from_slice(&temp);
                 (
-                    encode_string(&mut buffer[last_read..], &string),
+                    encode_string(&mut buffer[last_read..], string),
                     string.len(),
                 )
             }
             EncodeType::Bytes(bytes) => {
-                buffer.extend_from_slice(&bytes);
+                buffer.extend_from_slice(bytes);
                 (Ok(()), bytes.len())
             }
         };
 
-        if result.is_err() {
-            return Err(result.unwrap_err());
-        }
-
-        last_read += size_offset
+        last_read += size_offset;
+        result?;
     }
 
     Ok(buffer)

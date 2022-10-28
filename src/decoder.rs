@@ -1,7 +1,7 @@
 extern crate byteorder;
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 /// `DecodedData` enum is used to wrap the decoded content into one of the supported data-type.
 /// Example: `DecodedData::Str("hello")`, contains the string `hello` decoded back from the encoded bytes.
 pub enum DecodedData {
@@ -164,6 +164,7 @@ fn decode_string(array: &[u8]) -> Option<String> {
     String::from_utf8(array.to_vec()).ok()
 }
 
+#[allow(clippy::question_mark)]
 /// `decode_packed` function decoded a given byte-array into list of required values specified in `types` parameter.
 /// Returns the list of decoded values `Vec<DecodedData>` or `DecodeError`.
 ///
@@ -383,8 +384,8 @@ pub fn decode_packed(
             }
         };
 
-        if result.is_err() {
-            return Err(result.unwrap_err());
+        if let Err(err) = result {
+            return Err(err);
         }
 
         last_read += size_offset;
