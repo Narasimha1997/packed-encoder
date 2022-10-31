@@ -7,6 +7,7 @@ keywords = ["serialization", "deserialization", "structs", "FFI"]
 homepage = "https://github.com/Narasimha1997/packed-encoder"
 repository = "https://github.com/Narasimha1997/packed-encoder"
 readme = "README.md"
+description = "A tiny rust crate that can be used to encode data of different types into a packed byte array which can be passed over network, system calls or FFI."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
