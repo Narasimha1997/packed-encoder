@@ -2,6 +2,11 @@
 name = "packed-encoder"
 version = "0.1.0"
 edition = "2021"
+license-file = "LICENSE"
+keywords = ["serialization", "deserialization", "structs", "FFI"]
+homepage = "https://github.com/Narasimha1997/packed-encoder"
+repository = "https://github.com/Narasimha1997/packed-encoder"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
