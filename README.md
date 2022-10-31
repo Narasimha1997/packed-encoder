@@ -1,6 +1,18 @@
 # packed-encoder
 A tiny rust crate that can be used to encode data of different types into a packed byte array which can be passed over network, system calls or FFI. The byte array produced by this library can be casted into C-Like packed structs.
 
+## Installation
+The crate is published on crates.io, check out:
+
+1. [crates.io crate](https://crates.io/crates/packed-encoder)
+2. [docs.rs documentation](https://docs.rs/packed-encoder/0.1.1/packed_encoder/)
+
+To add `packed-encoder` to crates.io, add the following entry into `dependencies` section of `Cargo.toml` file:
+```
+[dependencies]
+packed-encoder = "0.1.1"
+```
+
 ## Encoding
 You can pass set of values that needs to be encoded into a byte array. As shown below:
 ```rust
